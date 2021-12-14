@@ -18,4 +18,10 @@ public class Parcel {
     private Integer idRecipient;
     //    фио отправителя
     private String recipientName;
+
+//    public Parcel(Integer idPostOfficeDestination, Integer idRecipient, String recipientName) {
+//        this.idPostOfficeDestination = idPostOfficeDestination;
+//        this.idRecipient = idRecipient;
+//        this.recipientName = recipientName;
+//    }
 }
