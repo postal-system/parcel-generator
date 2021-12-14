@@ -3,10 +3,10 @@ package io.codero.sendler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-@Service
+@Component
 public class Producer {
     @Autowired
     private KafkaTemplate<String, Parcel> template;
