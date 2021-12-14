@@ -11,7 +11,7 @@ public class Scheduler {
 
     @Scheduled(cron = "${app.schedule.generation-period}")
     public void generate() {
-        producer.sendMessage(new Parcel(1, 1, 1, ""));
+        producer.sendMessage(new Parcel(1, 1, 1, "Иванов Иван иванович"));
     }
 
 }

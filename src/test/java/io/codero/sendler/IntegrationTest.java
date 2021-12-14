@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = App.class)
+@SpringBootTest
 @DirtiesContext
 public class IntegrationTest {
     @ClassRule
