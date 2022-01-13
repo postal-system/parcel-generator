@@ -1,7 +1,7 @@
-app:
-  schedule:
-    generation-period: "*/3 * * * * *" # every 3 seconds
-
-kafka:
-  bootstrap-servers: 130.193.56.118:9092
-  topic: parcel
+#app:
+#  schedule:
+#    generation-period: "*/3 * * * * *" # every 3 seconds
+#
+#kafka:
+#  bootstrap-servers: 130.193.56.118:9092
+#  topic: parcel
