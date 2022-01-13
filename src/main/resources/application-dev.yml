@@ -3,5 +3,5 @@ app:
     generation-period: "*/3 * * * * *" # every 3 seconds
 
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: 130.193.56.118:9092
   topic: parcel

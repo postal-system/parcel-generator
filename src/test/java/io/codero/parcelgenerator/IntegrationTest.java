@@ -25,15 +25,14 @@ import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Disabled
-@SpringBootTest
+@SpringBootTest(classes = App.class)
 @DirtiesContext
 public class IntegrationTest {
     @ClassRule
     public static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:latest"));
 
-
     @Autowired
-    private ParcelProducerService producer;
+    private ParcelProducerService service;
 
     @Value("${kafka.topic}")
     private String topic;
@@ -51,18 +50,18 @@ public class IntegrationTest {
     @Test
     public void sendToKafkaMessageTest() {
         kafka.start();
+
         Parcel parcel = Parcel.builder()
                 .timestamp(Instant.now())
                 .idReceiver(1000)
-                .postOfficeReceiverId(644666)
-                .sender("Иоганн Христиан Тест")
+                .sender("testsender")
                 .build();
         KafkaConsumer<String, Parcel> consumer = new KafkaConsumer<>(consumerConfigs());
         consumer.subscribe(singletonList(topic));
 
-        producer.sendMessage(parcel);
+        service.sendMessage(parcel);
+
 
         assertNotNull(consumer.poll(Duration.ofMillis(10000)));
     }
-
 }
