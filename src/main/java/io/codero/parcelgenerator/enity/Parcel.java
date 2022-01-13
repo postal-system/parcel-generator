@@ -1,18 +1,17 @@
-package io.codero.sendler.enity;
+package io.codero.parcelgenerator.enity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class Parcel {
-    private UUID sourceId;
+    private UUID id;
     private Integer postOfficeReceiverId;
     private Integer idReceiver;
     private String sender;
+    private Instant timestamp;
 }

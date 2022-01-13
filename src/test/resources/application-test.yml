@@ -5,8 +5,5 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-app:
-  schedule:
-    generation-period: "*/3 * * * * *" # every 3 seconds
-  kafka:
-    topic: parcel
+kafka:
+  topic: "test"

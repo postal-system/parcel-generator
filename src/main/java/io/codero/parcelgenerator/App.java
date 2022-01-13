@@ -1,4 +1,4 @@
-package io.codero.sendler;
+package io.codero.parcelgenerator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

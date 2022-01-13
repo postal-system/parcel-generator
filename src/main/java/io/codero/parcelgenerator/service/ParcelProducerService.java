@@ -1,6 +1,6 @@
-package io.codero.sendler.service;
+package io.codero.parcelgenerator.service;
 
-import io.codero.sendler.enity.Parcel;
+import io.codero.parcelgenerator.enity.Parcel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
