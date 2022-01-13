@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Service
 public class ParcelGenerator {
+
     private final List<String> names = Arrays.asList(
             "Иванов Иван Иванович",
             "Алексеев Алексей Алексеевич",
