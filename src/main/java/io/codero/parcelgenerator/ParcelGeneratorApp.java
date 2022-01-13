@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableKafka
 @SpringBootApplication
 @EnableScheduling
-public class App {
+public class ParcelGeneratorApp {
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(ParcelGeneratorApp.class, args);
     }
 }

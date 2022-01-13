@@ -25,7 +25,7 @@ import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Disabled
-@SpringBootTest(classes = App.class)
+@SpringBootTest(classes = ParcelGeneratorApp.class)
 @DirtiesContext
 public class IntegrationTest {
     @ClassRule
