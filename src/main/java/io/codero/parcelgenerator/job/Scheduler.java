@@ -12,7 +12,7 @@ public class Scheduler {
     private final ParcelProducerService producer;
     private final ParcelGenerator parcelGenerator;
 
-    @Scheduled(cron = "${app.schedule.generation-period}")
+    @Scheduled(fixedDelayString = "${app.schedule.generation-period}")
     public void generate() {
         producer.sendMessage(parcelGenerator.generate());
     }

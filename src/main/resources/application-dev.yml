@@ -1,7 +1,6 @@
 app:
   schedule:
-    generation-period: "*/10 * * * *" # every 10 minutes
-
+    generation-period: 600000 # every 3 seconds
 kafka:
   bootstrap-servers: 130.193.56.118:9092
   topic: parcel
