@@ -21,10 +21,10 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-  parcelgeneratorapp:
-    image: 'application:latest'
-    build:
-      context: .
-    container_name: parcelgenerator
-    depends_on:
-      - broker
+#  parcelgeneratorapp:
+#    image: 'application:latest'
+#    build:
+#      context: .
+#    container_name: parcelgenerator
+#    depends_on:
+#      - broker

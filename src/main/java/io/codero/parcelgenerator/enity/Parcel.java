@@ -10,7 +10,7 @@ import java.util.UUID;
 @Builder
 public class Parcel {
     private UUID id;
-    private Integer postOfficeReceiverId;
+    private Integer postOfficeId;
     private Integer idReceiver;
     private String sender;
     private Instant timestamp;
