@@ -26,7 +26,7 @@ public class ParcelGenerator {
     public Parcel generate() {
         return Parcel.builder()
                 .id(UUID.randomUUID())
-                .idReceiver(getRandomId())
+                .idReceiver(2)
                 .postOfficeId(getRandomId())
                 .sender(names.get((int) (Math.random() * names.size())))
                 .timestamp(Instant.now())
