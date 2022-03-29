@@ -5,6 +5,7 @@ import io.codero.parcelgenerator.enity.Parcel;
 import io.codero.parcelgenerator.initializer.KafkaContainers;
 import io.codero.parcelgenerator.service.ParcelProducerService;
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -30,7 +32,7 @@ import static java.util.Collections.singletonList;
 @SpringBootTest
 @Import(ConsumerConfigTest.class)
 @ContextConfiguration(initializers = KafkaContainers.Initializer.class)
-public class IntegrationTest {
+public class ParcelServiceTest {
     @Value("${spring.kafka.topic}")
     private String topic;
 
@@ -48,12 +50,11 @@ public class IntegrationTest {
     @Test
     public void sendToKafkaMessageTest() {
         Parcel parcel = getParcel();
-        consumer.subscribe(singletonList(topic));
         service.sendMessage(parcel);
 
-        ConsumerRecords<String, Parcel> records = consumer.poll(Duration.ofSeconds(10));
+        ConsumerRecord<String, Parcel> record = KafkaTestUtils.getSingleRecord(consumer, topic);
 
-        records.forEach(record -> Assertions.assertEquals(parcel, record.value()));
+        Assertions.assertEquals(parcel, record.value());
         consumer.close();
     }
 
