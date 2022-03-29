@@ -25,6 +25,7 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collections;
 
 import static java.util.Collections.singletonList;
 
@@ -52,6 +53,7 @@ public class ParcelServiceTest {
         Parcel parcel = getParcel();
         service.sendMessage(parcel);
 
+        consumer.subscribe(Collections.singleton(topic));
         ConsumerRecord<String, Parcel> record = KafkaTestUtils.getSingleRecord(consumer, topic);
 
         Assertions.assertEquals(parcel, record.value());

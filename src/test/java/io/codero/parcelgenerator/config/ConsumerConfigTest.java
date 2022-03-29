@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +17,6 @@ public class ConsumerConfigTest {
 
     @Value("${spring.kafka.consumer.group-id:}")
     private String groupId;
-
-    @Value("${spring.kafka.topic}")
-    private String topic;
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrap;
@@ -39,11 +35,11 @@ public class ConsumerConfigTest {
 
     @Bean
     public Consumer<String, Parcel> getConsumer() {
-        Consumer<String, Parcel> consumer = new DefaultKafkaConsumerFactory<>(
+
+        return new DefaultKafkaConsumerFactory<>(
                 getConsumerProps(),
                 new StringDeserializer(),
-                new JsonDeserializer<>(Parcel.class)).createConsumer();
-        consumer.subscribe(Collections.singleton(topic));
-        return consumer;
+                new JsonDeserializer<>(Parcel.class)
+        ).createConsumer();
     }
 }
