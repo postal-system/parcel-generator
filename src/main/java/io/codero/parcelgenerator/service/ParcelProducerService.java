@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 public class ParcelProducerService {
     private final KafkaTemplate<String, Parcel> template;
 
-    @Value("${kafka.topic}")
+    @Value("${spring.kafka.topic}")
     private String topic;
 
     public void sendMessage(Parcel parcel) {
-        log.info("#### <- Producing message <- {}", parcel);
+        log.info(topic + ":#### <- {}", parcel);
         this.template.send(topic, parcel);
     }
 }

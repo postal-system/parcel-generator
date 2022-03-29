@@ -1,4 +1,4 @@
-package io.codero.parcelgenerator.conf;
+package io.codero.parcelgenerator.config;
 
 import io.codero.parcelgenerator.enity.Parcel;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig {
-    @Value("${kafka.bootstrap-servers}")
+    @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
     public Map<String, Object> producerConfigs() {

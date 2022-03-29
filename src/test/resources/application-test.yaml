@@ -1,0 +1,5 @@
+spring:
+  kafka:
+    consumer:
+      topic: "parcel-test"
+      group-id: "test-group"

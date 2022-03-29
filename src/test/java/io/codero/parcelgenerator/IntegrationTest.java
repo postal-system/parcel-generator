@@ -1,67 +1,67 @@
 package io.codero.parcelgenerator;
 
+import io.codero.parcelgenerator.config.ConsumerConfigTest;
 import io.codero.parcelgenerator.enity.Parcel;
+import io.codero.parcelgenerator.initializer.KafkaContainers;
 import io.codero.parcelgenerator.service.ParcelProducerService;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.junit.ClassRule;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.util.Collections.singletonList;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
-@SpringBootTest(classes = ParcelGeneratorApp.class)
-@DirtiesContext
+@ActiveProfiles("test")
+@SpringBootTest
+@Import(ConsumerConfigTest.class)
+@ContextConfiguration(initializers = KafkaContainers.Initializer.class)
 public class IntegrationTest {
-    @ClassRule
-    public static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:latest"));
+    @Value("${spring.kafka.topic}")
+    private String topic;
 
     @Autowired
     private ParcelProducerService service;
 
-    @Value("${kafka.topic}")
-    private String topic;
+    @Autowired
+    private Consumer<String, Parcel> consumer;
 
-    public Map<String, Object> consumerConfigs() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers());
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "groupId");
-        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 1);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        return props;
+    @BeforeAll
+    static void beforeAll() {
+        KafkaContainers.kafka.start();
     }
 
     @Test
     public void sendToKafkaMessageTest() {
-        kafka.start();
+        Parcel parcel = getParcel();
+        consumer.subscribe(singletonList(topic));
+        service.sendMessage(parcel);
 
-        Parcel parcel = Parcel.builder()
+        ConsumerRecords<String, Parcel> records = consumer.poll(Duration.ofSeconds(10));
+
+        records.forEach(record -> Assertions.assertEquals(parcel, record.value()));
+        consumer.close();
+    }
+
+    private Parcel getParcel() {
+        return Parcel.builder()
                 .timestamp(Instant.now())
                 .idReceiver(1000)
                 .sender("testsender")
                 .build();
-        KafkaConsumer<String, Parcel> consumer = new KafkaConsumer<>(consumerConfigs());
-        consumer.subscribe(singletonList(topic));
-
-        service.sendMessage(parcel);
-
-
-        assertNotNull(consumer.poll(Duration.ofMillis(10000)));
     }
 }

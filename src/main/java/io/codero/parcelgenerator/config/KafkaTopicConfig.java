@@ -1,4 +1,4 @@
-package io.codero.parcelgenerator.conf;
+package io.codero.parcelgenerator.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,7 +8,7 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
 public class KafkaTopicConfig {
-    @Value("${kafka.topic}")
+    @Value("${spring.kafka.topic}")
     private String topic;
 
     @Bean

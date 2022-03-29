@@ -41,4 +41,3 @@ deploy:
     - ssh -o StrictHostKeyChecking=no centos@${DEPLOY_WEB_HOST} -i ~/.ssh/id_rsa
       "sudo chmod -R 777 ${DEPLOY_FOLDER} && sudo systemctl daemon-reload && sudo systemctl enable ${CI_PROJECT_NAME}.service
       && sudo systemctl restart ${CI_PROJECT_NAME}.service"
-
