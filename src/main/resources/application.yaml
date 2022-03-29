@@ -1,7 +1,3 @@
 spring:
-  kafka:
-    bootstrap-servers: localhost:9092
-    topic: parcel
-app:
-  schedule:
-    generation-period: 3000 # every 3 seconds
+  profiles:
+    active: local

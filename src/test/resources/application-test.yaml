@@ -1,5 +1,5 @@
 spring:
   kafka:
+    topic: "parcel-test"
     consumer:
-      topic: "parcel-test"
       group-id: "test-group"
