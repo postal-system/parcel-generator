@@ -17,7 +17,7 @@ public class ParcelProducerService {
     private String topic;
 
     public void sendMessage(Parcel parcel) {
-        log.info(topic + ":#### <- {}", parcel);
         this.template.send(topic, parcel);
+        log.info(topic + ":#### <- {}", parcel);
     }
 }

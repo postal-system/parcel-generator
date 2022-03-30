@@ -12,21 +12,22 @@ import java.util.UUID;
 public class ParcelGenerator {
 
     private final List<String> names = Arrays.asList(
-            "Иванов Иван Иванович",
-            "Алексеев Алексей Алексеевич",
-            "Дмитриев Дмитрий Дмитриевич",
-            "Максимов Максим Максимович",
-            "Васильев Василий Васильевич",
-            "Обоев Рулон Поджогович",
-            "Надоев Рекорд Подрывович",
-            "Устоев Подрыв Рулонович",
-            "Сараев Поджег Рекордович"
+            "Ломоносов Михаил Васильевич",
+            "Павлов Иван Петрович",
+            "Пирогов Николай Иванович",
+            "Боткин Сергей Петрович",
+            "Менделеев Дмитрий Иванович",
+            "Кюри Мария Всеволодовна",
+            "Попов Александр Степанович",
+            "Мечников Илья Ильич",
+            "Сахаров Андрей Дмитриевич",
+            "Перельман Григорий Яковлевич"
     );
 
     public Parcel generate() {
         return Parcel.builder()
                 .id(UUID.randomUUID())
-                .idReceiver(2)
+                .idReceiver(2) /* this value  equals userId from ESK- system  User service */
                 .postOfficeId(getRandomId())
                 .sender(names.get((int) (Math.random() * names.size())))
                 .timestamp(Instant.now())
